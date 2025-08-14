@@ -1,46 +1,230 @@
-# Getting Started with Create React App
+## Проектная работа " Веб-приложение для выставочных стендов"
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Проект представляет собой адаптивное одностраничное веб-приложение (SPA-подобное) для управления сметами, складскими операциями и отчетностью.
+Основные функции включают:
 
-## Available Scripts
+- Создание и редактирование проектов,
+- Формирование смет,
+- Учет складских операций (списание материалов),
+- Генерация отчетов,
+- Экспорт данных в Excel
 
-In the project directory, you can run:
+Стек: 
 
-### `npm start`
+- React (TypeScript), 
+- Material-UI (MUI) для интерфейса,
+- LocalStorage для хранения данных,
+- date-fns для работы с датами,
+- xlsx для экспорта в Excel
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Структура проекта:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- src/App.tsx - корневой компонент приложения
+- src/AppNav.tsx - навигация между вкладками
+- src/ProjectSelector.tsx - выбор и создание проектов
 
-### `npm test`
+## Установка и запуск
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Для установки и запуска проекта необходимо выполнить команды
 
-### `npm run build`
+```
+npm install
+npm run start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+или
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+yarn
+yarn start
+```
+## Сборка
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+npm run build
+```
 
-### `npm run eject`
+или
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+yarn build
+```
+Приложение будет доступно по адресу: http://localhost:3000
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Данные и типы данных используемые в приложении
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Описание данных сметы
 
-## Learn More
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+interface EstimateItem {
+  id: string;
+  section: string;           // Раздел сметы
+  name: string;              // Наименование
+  costType: CostType;        // Вид затрат
+  unit: Unit;                // Единица измерения
+  plannedQuantity: number | string; // Плановое количество
+  unitCost: number | string;   // Стоимость единицы
+}
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+#### Описание данных склада
+
+```
+
+interface WarehouseEntry {
+  id: string;
+  projectId: string;         // ID проекта
+  date: string;              // Дата операции
+  itemId: string;            // ID материала из сметы
+  actualQuantity: number;    // Фактическое количество
+  comment: string;           // Комментарий
+}
+```
+
+#### Описание данных проекта
+
+```
+
+interface Project {
+  id: string;
+  name: string;               // Название проекта
+  preparedBy: string;         // Составитель сметы
+  preparationDate: string;    // Дата составления
+  createdAt: string;         // Дата создания
+  locked: boolean;           // Заблокирован для редактирования
+  approved: boolean;          // Утвержден
+  estimate: EstimateItem[];   // Строки сметы
+  warehouse: WarehouseEntry[];// Складские операции
+}
+```
+
+#### Описание данных наименования и ед.изм.
+
+```
+
+export type CostType = "Материалы" | "Аренда" | "Трудозатраты" | "Услуги";
+export type Unit = "м²" | "м/п" | "шт" | "компл." | "чел/час";
+
+```
+
+## Архитектура приложения
+
+Приложение разделено на:
+
+- Модель данных (типы и вычисления),
+
+- Компоненты с логикой (контейнеры),
+
+- Компоненты отображения (презентеры).
+
+### Базовый код
+
+#### Модули
+
+Estimate (Смета):
+
+ - `EstimateTable.tsx` - таблица сметы
+
+ - `EstimateForm.tsx`- форма добавления/редактирования строк сметы
+
+Warehouse (Склад):
+
+- `WarehouseTable.tsx` - таблица складских операций
+
+- `WarehouseForm.tsx` - форма добавления списания материалов
+
+Reports (Отчеты):
+
+- `ReportTable.tsx` - отчет по исполнению сметы
+
+#### Сервисы и утлиты
+
+- `storage.ts` - работа с LocalStorage
+
+- `calculations.ts` - расчеты по сметам и складу
+
+- `exportToExcel.ts` - экспорт данных в Excel
+
+#### Модели данных
+
+- `types.ts` - типы данных (Project, EstimateItem, WarehouseEntry и др.)
+
+- `mockProjects.ts` - тестовые данные
+
+### Функциональность
+
+#### Вкладка "Смета"
+
+- Создание/редактирование/удаление строк сметы
+
+- Группировка по разделам с возможностью раскрытия/скрытия
+
+- Автоматический расчет сумм
+
+- Утверждение сметы (блокировка редактирования)
+
+- Экспорт в Excel
+
+#### Вкладка "Склад"
+
+- Учет списания материалов
+
+- Сравнение плановых и фактических показателей
+
+- Редактирование количества списанных материалов
+
+- Фильтрация только по материалам (исключая другие виды затрат)
+
+#### Вкладка "Отчет"
+
+- Сравнение плановых и фактических показателей
+
+- Визуализация отклонений (подсветка отрицательных значений)
+
+- Расчет разниц в количестве и суммах
+
+### Логика работы
+
+- При запуске приложения загружаются данные из LocalStorage
+
+- Если данных нет, загружаются mock-данные
+
+- Пользователь выбирает проект или создает новый
+
+- В зависимости от выбранной вкладки отображается:
+
+- Смета (с возможностью редактирования, если не утверждена)
+
+- Складские операции
+
+- Отчет по исполнению сметы
+
+- Все изменения автоматически сохраняются в LocalStorage
+
+### Особенности реализации
+
+#### Валидация данных
+
+- Проверка обязательных полей
+
+- Проверка числовых значений на положительность
+
+- Ограничение ввода только чисел для количественных полей
+
+#### Расчеты
+
+- Автоматический расчет сумм
+
+- Расчет НДС (20%) и непредвиденных расходов (5%)
+
+- Сравнение плановых и фактических показателей
+
+#### Бизнес-правила
+
+- Утвержденные сметы нельзя редактировать
+
+- На складе учитываются только материалы (не другие виды затрат)
+
+- При экспорте в Excel формируются два листа: "Смета" и "Склад"
