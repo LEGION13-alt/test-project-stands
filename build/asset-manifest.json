@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/LEGION13-alt/test-project-stands.git/static/css/main.772f0b1b.css",
-    "main.js": "/LEGION13-alt/test-project-stands.git/static/js/main.d6d8696b.js",
-    "static/js/453.0ba6fbc1.chunk.js": "/LEGION13-alt/test-project-stands.git/static/js/453.0ba6fbc1.chunk.js",
-    "index.html": "/LEGION13-alt/test-project-stands.git/index.html",
-    "main.772f0b1b.css.map": "/LEGION13-alt/test-project-stands.git/static/css/main.772f0b1b.css.map",
-    "main.d6d8696b.js.map": "/LEGION13-alt/test-project-stands.git/static/js/main.d6d8696b.js.map",
-    "453.0ba6fbc1.chunk.js.map": "/LEGION13-alt/test-project-stands.git/static/js/453.0ba6fbc1.chunk.js.map"
+    "main.css": "/test-project-stands/static/css/main.772f0b1b.css",
+    "main.js": "/test-project-stands/static/js/main.dd4b460b.js",
+    "static/js/453.0ba6fbc1.chunk.js": "/test-project-stands/static/js/453.0ba6fbc1.chunk.js",
+    "index.html": "/test-project-stands/index.html",
+    "main.772f0b1b.css.map": "/test-project-stands/static/css/main.772f0b1b.css.map",
+    "main.dd4b460b.js.map": "/test-project-stands/static/js/main.dd4b460b.js.map",
+    "453.0ba6fbc1.chunk.js.map": "/test-project-stands/static/js/453.0ba6fbc1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.772f0b1b.css",
-    "static/js/main.d6d8696b.js"
+    "static/js/main.dd4b460b.js"
   ]
 }
