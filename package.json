@@ -2,7 +2,7 @@
   "name": "tets-project-stands",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://LEGION13-alt.github.io/test-project-stands",
+  "homepage": ".",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
